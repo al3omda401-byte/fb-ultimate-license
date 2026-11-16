@@ -1,6 +1,6 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:57:26",
+  "updated_at": "2026-11-16 14:57:30",
   "updated_by": "El3omDa",
   "devices": [
     {
@@ -15,7 +15,7 @@
       "id": "TEST7D-1111-2222-3333-444455556666",
       "name": "عميل 7 أيام",
       "note": "",
-      "active": true,
+      "active": false,
       "plan": "7d",
       "days": 0,
       "activated_at": "2026-11-16 14:57:15",
@@ -132,6 +132,12 @@
       "at": "2026-11-16 14:57:26",
       "action": "device_extend (30 يوم)",
       "device": "TESTCUST-1111-2222-3333-444455556666",
+      "by": "El3omDa"
+    },
+    {
+      "at": "2026-11-16 14:57:30",
+      "action": "device_toggle → False",
+      "device": "TEST7D-1111-2222-3333-444455556666",
       "by": "El3omDa"
     }
   ],
