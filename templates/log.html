@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}سجل العمليات{% endblock %}
+{% block crumb %}سجل العمليات{% endblock %}
+{% block content %}
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>سجل العمليات ({{ items|length }})</h2>
+    <form class="search" method="get" action="/log">
+      <input name="q" value="{{ query }}" placeholder="بحث في العملية / الجهاز / المستخدم">
+      <button class="btn ghost">بحث</button>
+    </form>
+  </div>
+  <table>
+    <thead><tr><th>الوقت</th><th>العملية</th><th>الجهاز</th><th>بواسطة</th></tr></thead>
+    <tbody>
+    {% for item in items %}
+      <tr>
+        <td class="mono dim">{{ item.at }}</td>
+        <td>{{ item.action }}</td>
+        <td class="mono">{{ item.device or '—' }}</td>
+        <td>{{ item.by or '—' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4" class="dim">مفيش عمليات مسجّلة</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
