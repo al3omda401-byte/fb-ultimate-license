@@ -28,7 +28,7 @@ import os
 import secrets
 import time
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -138,22 +138,20 @@ def current_user(request: Request) -> str:
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
     if not current_user(request):
-        return templates.TemplateResponse("login.html",
-                                          {"request": request, "error": ""})
+        return templates.TemplateResponse(request, "login.html", {"error": ""})
     return RedirectResponse("/dashboard", status_code=303)
 
 
 @app.post("/login")
 def login(request: Request, username: str = Form(""), password: str = Form("")):
     if not ADMIN_PASSWORD or not SESSION_SECRET:
-        return templates.TemplateResponse(
-            "login.html", {"request": request,
-                           "error": "المتغيرات ADMIN_PASSWORD و SECRET_KEY لازم يكونوا مضبوطين"})
+        return templates.TemplateResponse(request, "login.html", {
+            "error": "المتغيرات ADMIN_PASSWORD و SECRET_KEY لازم يكونوا مضبوطين"})
     ok_user = secrets.compare_digest(username.strip(), ADMIN_USER)
     ok_pass = secrets.compare_digest(password, ADMIN_PASSWORD)
     if not (ok_user and ok_pass):
-        return templates.TemplateResponse("login.html",
-                                          {"request": request, "error": "بيانات الدخول غلط"})
+        return templates.TemplateResponse(request, "login.html",
+                                          {"error": "بيانات الدخول غلط"})
     response = RedirectResponse("/dashboard", status_code=303)
     response.set_cookie(COOKIE, make_session(username.strip()), httponly=True,
                         samesite="lax", max_age=SESSION_HOURS * 3600)
@@ -180,8 +178,8 @@ def dashboard(request: Request, q: str = ""):
                    or query in normalize(str(d.get("name", "")))]
     devices = sorted(devices, key=lambda d: str(d.get("added_at", "")), reverse=True)
     active_count = sum(1 for d in store.get("devices") or [] if d.get("active"))
-    return templates.TemplateResponse("dashboard.html", {
-        "request": request, "user": user, "store": store, "devices": devices,
+    return templates.TemplateResponse(request, "dashboard.html", {
+        "user": user, "store": store, "devices": devices,
         "total": len(store.get("devices") or []), "active_count": active_count,
         "repo": REPO, "path": PATH, "branch": BRANCH, "query": q,
         "error": store.get("_error", ""), "notice": request.query_params.get("ok", ""),
