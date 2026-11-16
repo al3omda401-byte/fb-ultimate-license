@@ -6,18 +6,19 @@
   <title>دخول لوحة التفعيلات · FB ULTIMATE</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
-<body class="center">
-  <div class="card login">
-    <h1><span class="accent">FB ULTIMATE</span> · لوحة التفعيلات</h1>
-    {% if error %}<p class="alert error">{{ error }}</p>{% endif %}
+<body class="login">
+  <div class="login-card">
+    <h1><span style="color:var(--accent-2)">FB ULTIMATE</span> · لوحة التفعيلات</h1>
+    <div class="sub">لوحة تحكم النظام — دخول المالك فقط</div>
+    {% if error %}<div class="alert error">⚠ {{ error }}</div>{% endif %}
     <form method="post" action="/login">
       <label>اسم المستخدم</label>
-      <input name="username" autocomplete="username" required>
+      <input name="username" autocomplete="username" required autofocus>
       <label>كلمة المرور</label>
       <input name="password" type="password" autocomplete="current-password" required>
-      <button class="primary" type="submit">دخول</button>
+      <button class="btn primary" type="submit">دخول</button>
     </form>
-    <p class="dim">محمي بجلسة موقّعة · مفيش أي توكن بيظهر في الصفحة</p>
+    <div class="sub" style="margin-top:14px">جلسة موقّعة HMAC · مفيش أي توكن بيظهر في الصفحة</div>
   </div>
 </body>
 </html>
