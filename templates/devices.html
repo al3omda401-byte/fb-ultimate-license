@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}الأجهزة{% endblock %}
+{% block crumb %}الأجهزة{% endblock %}
+{% block content %}
+
+<section class="panel">
+  <div class="panel-head"><h2>إضافة جهاز / تفعيل بمدة</h2></div>
+  <form class="form-grid" method="post" action="/device/add">
+    <div>
+      <label>السريال (HWID)</label>
+      <input name="serial" placeholder="F1A2215D-2F2A-A123-23F1-000A8ED6BC0C" required>
+    </div>
+    <div>
+      <label>اسم العميل</label>
+      <input name="name" placeholder="مثال: أحمد م.">
+    </div>
+    <div>
+      <label>مدة التفعيل</label>
+      <select name="plan" id="plan-select">
+        {% for key, plan in plans.items() %}
+          <option value="{{ key }}" {{ 'selected' if key == store.settings.default_plan else '' }}>
+            {{ plan[0] }}{% if plan[1] %} ({{ plan[1] }} يوم){% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div id="custom-days-box" style="display:none">
+      <label>عدد الأيام (مخصص)</label>
+      <input name="days" type="number" min="1" max="3650" value="15">
+    </div>
+    <div>
+      <label>ملاحظة</label>
+      <input name="note" placeholder="اختياري">
+    </div>
+    <div class="form-action"><button class="btn primary">تفعيل الجهاز</button></div>
+  </form>
+  <p class="dim">نفس السريال لو موجود قبل كده: بيتحدّث (الاسم/الملاحظة) ويترجع مفعّل بالمدة الجديدة.</p>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>الأجهزة ({{ devices|length }})</h2>
+    <form class="search" method="get" action="/devices">
+      <input name="q" value="{{ query }}" placeholder="بحث بالسريال أو الاسم أو الملاحظة">
+      <select name="state" onchange="this.form.submit()">
+        {% for key, label in [('all','الكل'), ('active','مفعّل'), ('lifetime','مدى الحياة'),
+                              ('expiring','قرب ينتهي'), ('expired','منتهي'), ('disabled','موقوف')] %}
+          <option value="{{ key }}" {{ 'selected' if state == key else '' }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+      <button class="btn ghost">بحث</button>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>السريال</th><th>الاسم</th><th>المدة</th><th>الحالة</th><th>ينتهي</th>
+          <th>ملاحظة</th><th>أفعال</th></tr>
+    </thead>
+    <tbody>
+    {% for d in devices %}
+      <tr>
+        <td class="mono">{{ d.id }}</td>
+        <td>{{ d.name or '-' }}</td>
+        <td>{{ d.plan_label }}</td>
+        <td>
+          <span class="badge {{ d.state }}">{{ d.state_label }}</span>
+          {% if d.remaining_days is not none and d.remaining_days > 0 %}
+            <div class="bar"><span style="width: {{ d.progress }}%"></span></div>
+          {% endif %}
+        </td>
+        <td class="dim">{{ d.expires_display or '—' }}</td>
+        <td class="dim">{{ d.note or '-' }}</td>
+        <td class="actions-cell">
+          <form method="post" action="/device/toggle">
+            <input type="hidden" name="serial" value="{{ d.id }}">
+            <button class="btn {{ 'danger' if d.active else 'primary' }} sm">
+              {{ 'إيقاف' if d.active else 'تفعيل' }}</button>
+          </form>
+          <form method="post" action="/device/extend" class="inline-plan">
+            <input type="hidden" name="serial" value="{{ d.id }}">
+            <select name="plan">
+              <option value="7d">+7 أيام</option>
+              <option value="30d">+30 يوم</option>
+              <option value="90d">+90 يوم</option>
+              <option value="lifetime">مدى الحياة</option>
+              <option value="custom">مخصص</option>
+            </select>
+            <input name="days" type="number" min="1" placeholder="أيام" class="days">
+            <button class="btn ghost sm">تمديد</button>
+          </form>
+          <form method="post" action="/device/delete" onsubmit="return confirm('تأكيد حذف الجهاز؟')">
+            <input type="hidden" name="serial" value="{{ d.id }}">
+            <button class="btn danger sm">حذف</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="dim">مفيش أجهزة مطابقة</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
