@@ -12,7 +12,7 @@
 
 ## النشر على Render
 1. Render → New → **Blueprint** → اختار الريبو ده (`render.yaml` موجود).
-2. ضبط المتغيرات:
+2. اضبط المتغيرات:
    - `GITHUB_TOKEN` = توكن Fine-grained PAT بصلاحية **Contents: Read and write** على الريبو ده.
    - `ADMIN_USER` / `ADMIN_PASSWORD` = بيانات دخولك للوحة.
    - `SECRET_KEY` = يتولّد تلقائيًا (أو حط نص طويل عشوائي).
