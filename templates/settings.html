@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}الإعدادات{% endblock %}
+{% block crumb %}الإعدادات{% endblock %}
+{% block content %}
+
+<section class="panel">
+  <div class="panel-head"><h2>المفتاح العام (All_Active)</h2></div>
+  <div class="grid2">
+    <div class="mini">
+      <div class="mini-title">الحالة الحالية</div>
+      {% if store.all_active %}
+        <div class="badge ok big">مفتوح للكل</div>
+        <p class="dim">كل جهاز يقدر يشغّل البرنامج بدون ما يكون مضاف — استخدمه للتجربة أو الإطلاق.</p>
+        <form method="post" action="/toggle-all"
+              onsubmit="return confirm('تأكيد قفل المفتاح العام؟ (هيرجع للسريالات فقط)')">
+          <button class="btn danger">اقفل المفتاح (بالسريالات)</button>
+        </form>
+      {% else %}
+        <div class="badge warn big">مغلق — بالسريالات فقط</div>
+        <p class="dim">الجهاز لازم يكون مضاف ومفعّل ولسه جوه مدته عشان البرنامج يشتغل.</p>
+        <form method="post" action="/toggle-all"
+              onsubmit="return confirm('تأكيد فتح التفعيل للكل؟')">
+          <button class="btn primary">افتح للكل</button>
+        </form>
+      {% endif %}
+    </div>
+    <div class="mini">
+      <div class="mini-title">إحصائية سريعة</div>
+      <ul class="facts">
+        <li><span>إجمالي الأجهزة</span><b>{{ counts.total }}</b></li>
+        <li><span>مفعّلة</span><b class="green">{{ counts.active_all }}</b></li>
+        <li><span>قرب تنتهي</span><b class="orange">{{ counts.expiring }}</b></li>
+        <li><span>منتهية</span><b class="red">{{ counts.expired }}</b></li>
+        <li><span>موقوفة</span><b class="dim">{{ counts.disabled }}</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>إعدادات النظام</h2></div>
+  <form class="form-grid" method="post" action="/settings/save">
+    <div>
+      <label>اسم النظام</label>
+      <input name="system_name" value="{{ store.settings.system_name or 'FB ULTIMATE' }}">
+    </div>
+    <div>
+      <label>المدة الافتراضية للتفعيل</label>
+      <select name="default_plan">
+        {% for key, plan in plans.items() %}
+          <option value="{{ key }}" {{ 'selected' if key == store.settings.default_plan else '' }}>
+            {{ plan[0] }}{% if plan[1] %} ({{ plan[1] }} يوم){% endif %}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label>الأيام الافتراضية (للمدة المخصصة)</label>
+      <input name="default_days" type="number" min="1" max="3650"
+             value="{{ store.settings.default_days or 30 }}">
+    </div>
+    <div>
+      <label>رابط الاشتراك</label>
+      <input name="subscribe_url" value="{{ store.settings.subscribe_url or '' }}"
+             placeholder="https://t.me/...">
+    </div>
+    <div class="form-action"><button class="btn primary">حفظ الإعدادات</button></div>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>معلومات المخزن</h2></div>
+  <ul class="facts">
+    <li><span>الريبو</span><b class="mono">{{ repo }}</b></li>
+    <li><span>الملف</span><b class="mono">{{ path }}</b></li>
+    <li><span>الفرع</span><b class="mono">{{ branch }}</b></li>
+    <li><span>آخر تحديث</span><b>{{ updated or '-' }} — {{ updated_by or '-' }}</b></li>
+  </ul>
+  <p class="dim">ملف التفعيل بيتكتب على GitHub بـcommit واحد لكل عملية + تحقق sha256 بعد الكتابة.</p>
+</section>
+{% endblock %}
