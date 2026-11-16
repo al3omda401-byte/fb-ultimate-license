@@ -1,6 +1,6 @@
 {
-  "all_active": false,
-  "updated_at": "2026-11-16 13:41:18",
+  "all_active": true,
+  "updated_at": "2026-11-16 13:41:27",
   "updated_by": "mr_3omda",
   "devices": [
     {
@@ -64,6 +64,12 @@
     {
       "at": "2026-11-16 13:41:18",
       "action": "toggle_all → False",
+      "device": "",
+      "by": "mr_3omda"
+    },
+    {
+      "at": "2026-11-16 13:41:27",
+      "action": "toggle_all → True",
       "device": "",
       "by": "mr_3omda"
     }
