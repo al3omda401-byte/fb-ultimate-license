@@ -1,6 +1,6 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:57:30",
+  "updated_at": "2026-11-16 14:57:33",
   "updated_by": "El3omDa",
   "devices": [
     {
@@ -139,11 +139,17 @@
       "action": "device_toggle → False",
       "device": "TEST7D-1111-2222-3333-444455556666",
       "by": "El3omDa"
+    },
+    {
+      "at": "2026-11-16 14:57:33",
+      "action": "settings_save",
+      "device": "",
+      "by": "El3omDa"
     }
   ],
   "settings": {
-    "default_plan": "30d",
-    "default_days": 30,
+    "default_plan": "7d",
+    "default_days": 15,
     "subscribe_url": "https://t.me/Al3OmDa228",
     "system_name": "FB ULTIMATE"
   }
