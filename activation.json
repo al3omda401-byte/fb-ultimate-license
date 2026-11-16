@@ -1,6 +1,6 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:09:53",
+  "updated_at": "2026-11-16 14:09:56",
   "updated_by": "mr_3omda",
   "devices": [
     {
@@ -10,14 +10,6 @@
       "active": true,
       "added_at": "2026-11-16 14:03:35",
       "added_by": "setup"
-    },
-    {
-      "id": "LIVE7D-1111-2222-3333-444455556666",
-      "name": "اختبار حيّ",
-      "note": "تحقق",
-      "active": true,
-      "added_at": "2026-11-16 14:09:53",
-      "added_by": "mr_3omda"
     }
   ],
   "log": [
@@ -138,6 +130,12 @@
     {
       "at": "2026-11-16 14:09:53",
       "action": "device_add",
+      "device": "LIVE7D-1111-2222-3333-444455556666",
+      "by": "mr_3omda"
+    },
+    {
+      "at": "2026-11-16 14:09:56",
+      "action": "device_delete",
       "device": "LIVE7D-1111-2222-3333-444455556666",
       "by": "mr_3omda"
     }
