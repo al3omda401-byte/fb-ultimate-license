@@ -1,6 +1,6 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:12:30",
+  "updated_at": "2026-11-16 14:12:33",
   "updated_by": "El3omDa",
   "devices": [
     {
@@ -15,7 +15,7 @@
       "id": "TEST-0000-1111-2222-333344445555",
       "name": "جهاز اختبار",
       "note": "تجربة تلقائية",
-      "active": true,
+      "active": false,
       "added_at": "2026-11-16 14:12:30",
       "added_by": "El3omDa"
     }
@@ -36,6 +36,12 @@
     {
       "at": "2026-11-16 14:12:30",
       "action": "device_add",
+      "device": "TEST-0000-1111-2222-333344445555",
+      "by": "El3omDa"
+    },
+    {
+      "at": "2026-11-16 14:12:33",
+      "action": "device_toggle → False",
       "device": "TEST-0000-1111-2222-333344445555",
       "by": "El3omDa"
     }
