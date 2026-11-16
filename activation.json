@@ -129,8 +129,8 @@
     }
   ],
   "settings": {
-    "default_plan": "7d",
-    "default_days": 15,
+    "default_plan": "30d",
+    "default_days": 30,
     "subscribe_url": "https://t.me/Al3OmDa228",
     "system_name": "FB ULTIMATE"
   }
