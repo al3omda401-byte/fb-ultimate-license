@@ -1,7 +1,7 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:12:37",
-  "updated_by": "El3omDa",
+  "updated_at": "2026-11-16 13:40:51",
+  "updated_by": "mr_3omda",
   "devices": [
     {
       "id": "F1A2215D-2F2A-A123-23F1-000A8ED6BC0C",
@@ -10,6 +10,14 @@
       "active": true,
       "added_at": "2026-11-16 14:03:35",
       "added_by": "setup"
+    },
+    {
+      "id": "TESTLIVE-0000-1111-2222-333344445555",
+      "name": "جهاز اختبار حيّ",
+      "note": "تحقق",
+      "active": true,
+      "added_at": "2026-11-16 13:40:51",
+      "added_by": "mr_3omda"
     }
   ],
   "log": [
@@ -42,6 +50,12 @@
       "action": "device_delete",
       "device": "TEST-0000-1111-2222-333344445555",
       "by": "El3omDa"
+    },
+    {
+      "at": "2026-11-16 13:40:51",
+      "action": "device_add",
+      "device": "TESTLIVE-0000-1111-2222-333344445555",
+      "by": "mr_3omda"
     }
   ]
 }
