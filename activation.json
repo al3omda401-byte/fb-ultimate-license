@@ -1,6 +1,6 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:57:41",
+  "updated_at": "2026-11-16 14:57:44",
   "updated_by": "El3omDa",
   "devices": [
     {
@@ -10,19 +10,6 @@
       "active": true,
       "added_at": "2026-11-16 14:03:35",
       "added_by": "setup"
-    },
-    {
-      "id": "TESTCUST-1111-2222-3333-444455556666",
-      "name": "عميل مخصص",
-      "note": "",
-      "active": true,
-      "plan": "30d",
-      "days": 0,
-      "activated_at": "2026-11-16 14:57:22",
-      "expires_at": "2026-12-19 14:57:22",
-      "added_at": "2026-11-16 14:57:22",
-      "added_by": "El3omDa",
-      "last_extend": "2026-11-16 14:57:26"
     }
   ],
   "log": [
@@ -132,6 +119,12 @@
       "at": "2026-11-16 14:57:41",
       "action": "device_delete",
       "device": "TESTLIFE-1111-2222-3333-444455556666",
+      "by": "El3omDa"
+    },
+    {
+      "at": "2026-11-16 14:57:44",
+      "action": "device_delete",
+      "device": "TESTCUST-1111-2222-3333-444455556666",
       "by": "El3omDa"
     }
   ],
