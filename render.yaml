@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: fb-ultimate-license
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: GITHUB_REPO
+        value: al3omda401-byte/fb-ultimate-license
+      - key: ACTIVATION_PATH
+        value: activation.json
+      - key: BRANCH
+        value: main
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GITHUB_TOKEN
+        sync: false
