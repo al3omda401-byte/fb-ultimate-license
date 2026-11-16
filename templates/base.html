@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}لوحة التفعيلات{% endblock %} · {{ store.settings.system_name or 'FB ULTIMATE' }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="dot"></span>
+      <div>
+        <div class="logo-title">FB ULTIMATE</div>
+        <div class="logo-sub">نظام التفعيلات</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="/dashboard" class="{{ 'on' if active_page=='dashboard' else '' }}">
+        <span class="ico">▤</span> لوحة المعلومات</a>
+      <a href="/devices" class="{{ 'on' if active_page=='devices' else '' }}">
+        <span class="ico">▦</span> الأجهزة <span class="pill">{{ counts.total }}</span></a>
+      <a href="/log" class="{{ 'on' if active_page=='log' else '' }}">
+        <span class="ico">☰</span> سجل العمليات</a>
+      <a href="/settings" class="{{ 'on' if active_page=='settings' else '' }}">
+        <span class="ico">⚙</span> الإعدادات</a>
+    </nav>
+
+    <div class="side-box">
+      <div class="side-box-title">المفتاح العام</div>
+      {% if store.all_active %}
+        <div class="badge ok">مفتوح للكل (All_Active)</div>
+      {% else %}
+        <div class="badge warn">بالسريالات فقط</div>
+      {% endif %}
+      <div class="side-box-note">التحكم الكامل من صفحة الإعدادات</div>
+    </div>
+
+    <div class="side-foot">
+      <div class="dim">المخزن: GitHub</div>
+      <div class="mono small">{{ repo }}</div>
+      <div class="mono small">{{ path }} · {{ branch }}</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="crumbs">{% block crumb %}{% endblock %}</div>
+      <div class="top-actions">
+        <span class="chip">👤 {{ user }}</span>
+        <span class="chip dim">آخر تحديث: {{ updated or '-' }}</span>
+        <a class="chip link" href="/logout">خروج</a>
+      </div>
+    </header>
+
+    {% if error %}<div class="alert error">⚠ {{ error }}</div>{% endif %}
+    {% if notice %}<div class="alert ok">✔ تم تنفيذ العملية ({{ notice }})</div>{% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
