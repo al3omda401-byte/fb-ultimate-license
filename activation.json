@@ -1,0 +1,23 @@
+{
+  "all_active": true,
+  "updated_at": "2026-11-16 14:03:35",
+  "updated_by": "setup",
+  "devices": [
+    {
+      "id": "F1A2215D-2F2A-A123-23F1-000A8ED6BC0C",
+      "name": "El3omDa-PC",
+      "note": "جهاز المالك",
+      "active": true,
+      "added_at": "2026-11-16 14:03:35",
+      "added_by": "setup"
+    }
+  ],
+  "log": [
+    {
+      "at": "2026-11-16 14:03:35",
+      "action": "init",
+      "device": "",
+      "by": "setup"
+    }
+  ]
+}
