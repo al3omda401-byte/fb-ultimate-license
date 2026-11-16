@@ -1,7 +1,10 @@
 # FB ULTIMATE · نظام التفعيلات
 
-- `activation.json` — مصدر الحقيقة للتفعيلات (كل الأجهزة أو سريالات محددة).
-- `admin_dashboard/` — لوحة تحكم ويب (FastAPI) للتحكم في التفعيلات، جاهزة للنشر على Render.
+كل الملفات في **جذر الريبو** (عشان Render يبني من غير Root Directory).
+
+- `activation.json` — مصدر الحقيقة للتفعيلات.
+- `app.py` + `github_store.py` + `templates/` + `static/` — لوحة التحكم (FastAPI).
+- `render.yaml` — إعدادات النشر على Render.
 
 ## القاعدة
 ```json
@@ -10,13 +13,16 @@
 - `all_active: true` → كل الأجهزة مفعّلة.
 - غير كده → الجهاز لازم يكون موجود بـ`active: true`.
 
-## النشر على Render
-1. Render → New → **Blueprint** → اختار الريبو ده (`render.yaml` موجود).
-2. اضبط المتغيرات:
-   - `GITHUB_TOKEN` = توكن Fine-grained PAT بصلاحية **Contents: Read and write** على الريبو ده.
-   - `ADMIN_USER` / `ADMIN_PASSWORD` = بيانات دخولك للوحة.
-   - `SECRET_KEY` = يتولّد تلقائيًا (أو حط نص طويل عشوائي).
-3. بعد النشر: افتح رابط الخدمة → سجّل دخول → تحكم في الأجهزة.
+## إعدادات Render
+| الحقل | القيمة |
+|---|---|
+| Root Directory | **اتركه فاضي** |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `uvicorn app:app --host 0.0.0.0 --port $PORT` |
+| Health Check Path | `/healthz` |
 
-البرنامج (FB ULTIMATE) بيقرا `activation.json` من الرابط العام:
+**Environment Variables:** `GITHUB_TOKEN` · `GITHUB_REPO` · `ACTIVATION_PATH` · `BRANCH` ·
+`PYTHON_VERSION=3.12.10` · `ADMIN_USER` · `ADMIN_PASSWORD` · `SECRET_KEY`
+
+## رابط التفعيل اللي البرنامج بيقراه
 `https://raw.githubusercontent.com/al3omda401-byte/fb-ultimate-license/refs/heads/main/activation.json`
