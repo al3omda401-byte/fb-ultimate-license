@@ -1,7 +1,7 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 13:41:27",
-  "updated_by": "mr_3omda",
+  "updated_at": "2026-11-16 14:57:15",
+  "updated_by": "El3omDa",
   "devices": [
     {
       "id": "F1A2215D-2F2A-A123-23F1-000A8ED6BC0C",
@@ -10,6 +10,18 @@
       "active": true,
       "added_at": "2026-11-16 14:03:35",
       "added_by": "setup"
+    },
+    {
+      "id": "TEST7D-1111-2222-3333-444455556666",
+      "name": "عميل 7 أيام",
+      "note": "",
+      "active": true,
+      "plan": "7d",
+      "days": 0,
+      "activated_at": "2026-11-16 14:57:15",
+      "expires_at": "2026-11-23 14:57:15",
+      "added_at": "2026-11-16 14:57:15",
+      "added_by": "El3omDa"
     }
   ],
   "log": [
@@ -72,6 +84,18 @@
       "action": "toggle_all → True",
       "device": "",
       "by": "mr_3omda"
+    },
+    {
+      "at": "2026-11-16 14:57:15",
+      "action": "device_add (7 أيام)",
+      "device": "TEST7D-1111-2222-3333-444455556666",
+      "by": "El3omDa"
     }
-  ]
+  ],
+  "settings": {
+    "default_plan": "30d",
+    "default_days": 30,
+    "subscribe_url": "https://t.me/Al3OmDa228",
+    "system_name": "FB ULTIMATE"
+  }
 }
