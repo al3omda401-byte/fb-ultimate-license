@@ -3,6 +3,7 @@ services:
     name: fb-ultimate-license
     runtime: python
     plan: free
+    rootDir: admin_dashboard
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /healthz
@@ -13,8 +14,6 @@ services:
         value: activation.json
       - key: BRANCH
         value: main
-      - key: PYTHON_VERSION
-        value: 3.12.10
       - key: ADMIN_USER
         sync: false
       - key: ADMIN_PASSWORD
