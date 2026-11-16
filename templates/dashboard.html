@@ -1,110 +1,113 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>لوحة التفعيلات · FB ULTIMATE</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <header class="top">
-    <div class="brand"><span class="accent">FB ULTIMATE</span> <span class="dim">لوحة التفعيلات</span></div>
-    <div class="meta">
-      <span class="chip">{{ user }}</span>
-      <span class="chip dim">{{ repo }} · {{ path }}</span>
-      <a class="chip link" href="/logout">خروج</a>
-    </div>
-  </header>
+{% extends "base.html" %}
+{% block title %}لوحة المعلومات{% endblock %}
+{% block crumb %}لوحة المعلومات{% endblock %}
+{% block content %}
 
-  {% if error %}<p class="alert error">{{ error }}</p>{% endif %}
-  {% if notice %}<p class="alert ok">تم التنفيذ بنجاح ({{ notice }})</p>{% endif %}
+<section class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">إجمالي الأجهزة</div>
+    <div class="kpi-value">{{ counts.total }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">مفعّلة</div>
+    <div class="kpi-value green">{{ counts.active_all }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">قرب تنتهي (≤ {{ 7 }} أيام)</div>
+    <div class="kpi-value orange">{{ counts.expiring }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">منتهية</div>
+    <div class="kpi-value red">{{ counts.expired }}</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">موقوفة</div>
+    <div class="kpi-value dim">{{ counts.disabled }}</div>
+  </div>
+</section>
 
-  <section class="cards">
-    <div class="card stat">
-      <div class="label">إجمالي الأجهزة</div>
-      <div class="value">{{ total }}</div>
+<section class="panel">
+  <div class="panel-head">
+    <h2>ملخص الحالة</h2>
+    <button class="ghost" onclick="location.reload()">تحديث</button>
+  </div>
+  <div class="grid2">
+    <div class="mini">
+      <div class="mini-title">المفتاح العام</div>
+      {% if store.all_active %}
+        <div class="badge ok big">مفتوح للكل</div>
+        <p class="dim">كل الأجهزة مفعّلة بغض النظر عن السريال — مناسب للتجربة أو الإطلاق المفتوح.</p>
+      {% else %}
+        <div class="badge warn big">مغلق (بالسريالات)</div>
+        <p class="dim">الجهاز لازم يكون مضاف ومفعّل ولسه في المدة.</p>
+      {% endif %}
+      <a class="btn ghost" href="/settings">التحكم من الإعدادات</a>
     </div>
-    <div class="card stat">
-      <div class="label">أجهزة مفعّلة</div>
-      <div class="value green">{{ active_count }}</div>
-    </div>
-    <div class="card stat wide">
-      <div class="label">المفتاح العام (All_Active)</div>
-      <div class="value {{ 'green' if store.all_active else 'red' }}">
-        {{ 'مفتوح للكل' if store.all_active else 'بالسريالات فقط' }}
+    <div class="mini">
+      <div class="mini-title">سريع</div>
+      <div class="quick">
+        <a class="btn primary" href="/devices">إضافة جهاز وتفعيله</a>
+        <a class="btn ghost" href="/devices?state=expiring">الأجهزة اللي هتنتهي</a>
+        <a class="btn ghost" href="/devices?state=expired">الأجهزة المنتهية</a>
+        <a class="btn ghost" href="/log">سجل العمليات</a>
       </div>
-      <form method="post" action="/toggle-all">
-        <button class="{{ 'danger' if store.all_active else 'primary' }}">
-          {{ 'اقفل المفتاح العام' if store.all_active else 'افتح للكل (All_Active)' }}
-        </button>
-      </form>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="card">
-    <h2>إضافة / تفعيل جهاز</h2>
-    <form class="grid" method="post" action="/device/add">
-      <div><label>السريال (HWID)</label><input name="serial" placeholder="F1A2215D-...." required></div>
-      <div><label>الاسم</label><input name="name" placeholder="اسم العميل"></div>
-      <div><label>ملاحظة</label><input name="note" placeholder="اختياري"></div>
-      <div class="actions"><button class="primary">تفعيل الجهاز</button></div>
-    </form>
-    <p class="dim">السريال بيظهر للعميل في شاشة التفعيل داخل البرنامج (ويقدر ينسخه بضغطة).</p>
-  </section>
+<section class="panel">
+  <div class="panel-head">
+    <h2>أجهزة تحتاج انتباه</h2>
+    <a class="btn ghost sm" href="/devices">كل الأجهزة</a>
+  </div>
+  <table>
+    <thead><tr><th>السريال</th><th>الاسم</th><th>المدة</th><th>الحالة</th><th>ينتهي</th></tr></thead>
+    <tbody>
+    {% for d in expiring %}
+      <tr>
+        <td class="mono">{{ d.id }}</td>
+        <td>{{ d.name or '-' }}</td>
+        <td>{{ d.plan_label }}</td>
+        <td><span class="badge {{ d.state }}">{{ d.state_label }}</span></td>
+        <td class="dim">{{ d.expires_display or '-' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="dim">مفيش أجهزة قرب تنتهي أو منتهية 👍</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
 
-  <section class="card">
-    <div class="row">
-      <h2>الأجهزة</h2>
-      <form class="search" method="get" action="/dashboard">
-        <input name="q" value="{{ query }}" placeholder="بحث بالسريال أو الاسم">
-        <button class="ghost">بحث</button>
-      </form>
-    </div>
-    <table>
-      <thead>
-        <tr><th>السريال</th><th>الاسم</th><th>الحالة</th><th>أُضيف</th><th>ملاحظة</th><th>أفعال</th></tr>
-      </thead>
-      <tbody>
-      {% for d in devices %}
-        <tr>
-          <td class="mono">{{ d.id }}</td>
-          <td>{{ d.name or '-' }}</td>
-          <td class="{{ 'green' if d.active else 'red' }}">{{ 'مفعّل' if d.active else 'موقوف' }}</td>
-          <td class="dim">{{ d.added_at or '-' }}</td>
-          <td class="dim">{{ d.note or '-' }}</td>
-          <td class="actions-cell">
-            <form method="post" action="/device/toggle">
-              <input type="hidden" name="serial" value="{{ d.id }}">
-              <button class="{{ 'danger' if d.active else 'primary' }} sm">
-                {{ 'إيقاف' if d.active else 'تفعيل' }}
-              </button>
-            </form>
-            <form method="post" action="/device/delete" onsubmit="return confirm('تأكيد حذف الجهاز؟')">
-              <input type="hidden" name="serial" value="{{ d.id }}">
-              <button class="ghost sm">حذف</button>
-            </form>
-          </td>
-        </tr>
-      {% else %}
-        <tr><td colspan="6" class="dim">مفيش أجهزة مطابقة</td></tr>
-      {% endfor %}
-      </tbody>
-    </table>
-    <p class="dim">آخر تحديث: {{ store.updated_at or '-' }} بواسطة {{ store.updated_by or '-' }}
-      · الفرع: {{ branch }}</p>
-  </section>
+<section class="panel">
+  <div class="panel-head"><h2>آخر الأجهزة</h2></div>
+  <table>
+    <thead><tr><th>السريال</th><th>الاسم</th><th>المدة</th><th>الحالة</th><th>أُضيف</th></tr></thead>
+    <tbody>
+    {% for d in devices %}
+      <tr>
+        <td class="mono">{{ d.id }}</td>
+        <td>{{ d.name or '-' }}</td>
+        <td>{{ d.plan_label }}</td>
+        <td><span class="badge {{ d.state }}">{{ d.state_label }}</span></td>
+        <td class="dim">{{ d.added_at or '-' }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="dim">مفيش أجهزة لسه</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
 
-  <section class="card">
-    <h2>سجل العمليات</h2>
-    <ul class="log">
-      {% for item in store.log|reverse %}
-        <li><span class="dim">{{ item.at }}</span> · {{ item.action }}
-          {% if item.device %}<span class="mono">{{ item.device }}</span>{% endif %}
-          <span class="dim">— {{ item.by }}</span></li>
-      {% else %}
-        <li class="dim">السجل فاضي</li>
-      {% endfor %}
-    </ul>
-  </section>
-</body>
-</html>
+<section class="panel">
+  <div class="panel-head"><h2>آخر العمليات</h2><a class="btn ghost sm" href="/log">السجل الكامل</a></div>
+  <ul class="timeline">
+    {% for item in recent_log %}
+      <li><span class="dim mono">{{ item.at }}</span> · {{ item.action }}
+        {% if item.device %}<span class="mono">{{ item.device }}</span>{% endif %}
+        <span class="dim">— {{ item.by }}</span></li>
+    {% else %}
+      <li class="dim">السجل فاضي</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}
