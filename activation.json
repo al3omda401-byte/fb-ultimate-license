@@ -1,7 +1,7 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:03:35",
-  "updated_by": "setup",
+  "updated_at": "2026-11-16 14:12:30",
+  "updated_by": "El3omDa",
   "devices": [
     {
       "id": "F1A2215D-2F2A-A123-23F1-000A8ED6BC0C",
@@ -10,6 +10,14 @@
       "active": true,
       "added_at": "2026-11-16 14:03:35",
       "added_by": "setup"
+    },
+    {
+      "id": "TEST-0000-1111-2222-333344445555",
+      "name": "جهاز اختبار",
+      "note": "تجربة تلقائية",
+      "active": true,
+      "added_at": "2026-11-16 14:12:30",
+      "added_by": "El3omDa"
     }
   ],
   "log": [
@@ -24,6 +32,12 @@
       "action": "write_path_test",
       "device": "",
       "by": "diagnostic"
+    },
+    {
+      "at": "2026-11-16 14:12:30",
+      "action": "device_add",
+      "device": "TEST-0000-1111-2222-333344445555",
+      "by": "El3omDa"
     }
   ]
 }
