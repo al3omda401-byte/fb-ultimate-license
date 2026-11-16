@@ -18,6 +18,12 @@
       "action": "init",
       "device": "",
       "by": "setup"
+    },
+    {
+      "at": "write-test",
+      "action": "write_path_test",
+      "device": "",
+      "by": "diagnostic"
     }
   ]
 }
