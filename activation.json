@@ -1,6 +1,6 @@
 {
   "all_active": true,
-  "updated_at": "2026-11-16 14:57:38",
+  "updated_at": "2026-11-16 14:57:41",
   "updated_by": "El3omDa",
   "devices": [
     {
@@ -10,18 +10,6 @@
       "active": true,
       "added_at": "2026-11-16 14:03:35",
       "added_by": "setup"
-    },
-    {
-      "id": "TESTLIFE-1111-2222-3333-444455556666",
-      "name": "عميل دايم",
-      "note": "",
-      "active": true,
-      "plan": "lifetime",
-      "days": 0,
-      "activated_at": "2026-11-16 14:57:19",
-      "expires_at": "",
-      "added_at": "2026-11-16 14:57:19",
-      "added_by": "El3omDa"
     },
     {
       "id": "TESTCUST-1111-2222-3333-444455556666",
@@ -138,6 +126,12 @@
       "at": "2026-11-16 14:57:38",
       "action": "device_delete",
       "device": "TEST7D-1111-2222-3333-444455556666",
+      "by": "El3omDa"
+    },
+    {
+      "at": "2026-11-16 14:57:41",
+      "action": "device_delete",
+      "device": "TESTLIFE-1111-2222-3333-444455556666",
       "by": "El3omDa"
     }
   ],
